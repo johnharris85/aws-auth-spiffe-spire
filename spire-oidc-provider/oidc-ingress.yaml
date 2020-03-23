@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: spire-oidc
+  namespace: spire
+  annotations:
+    kubernetes.io/ingress.class: "contour"    
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+  - hosts:
+    - spire.example.com
+    secretName: spire-server-tls
+  rules:
+  - host: spire.example.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: spire-oidc
+          servicePort: oidc

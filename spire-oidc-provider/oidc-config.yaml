@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spire-oidc-config
+  namespace: spire
+data:
+  oidc.conf: |
+    log_level = "debug"
+    domain = "spire.example.com"
+    insecure_addr = "0.0.0.0:9090"
+    workload_api {
+      socket_path = "/run/spire/sockets/agent.sock"
+      trust_domain = "example.com"
+    }
